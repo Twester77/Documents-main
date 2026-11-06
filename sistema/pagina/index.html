@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Biblioteca</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Biblioteca</h1>
+
+    <button id="botao-listar">Listar livros</button>
+    <ul id="lista"></ul>
+
+    <h2>Buscar pelo código</h2>
+    <input id="codigo" type="number"> 
+    <button id="botao-buscar">Buscar</button>
+    <p id="resultado"></p>
+
+    <h2>Cadastrar Livro</h2>
+    <input id="titulo" placeholder="Título">
+    <input id="autor" placeholder="Autor">
+    <input id="ano" type="number" placeholder="Ano">
+    <button id="botao-cadastrar">Cadastrar</button>
+    <p id="mensagem"></p>
+
+    <h2>Excluir pelo código</h2>
+    <input id="codigo-excluir" type="number"> 
+    <button id="botao-excluir">Excluir</button>
+    <p id="mensagem-excluir"></p>
+
+    <h2>Alterar Livro</h2>
+    <input id="codigo-alterar" type="number" placeholder="Código">
+    <input id="novo-titulo" placeholder="Título">
+    <input id="novo-autor" placeholder="Autor">
+    <input id="novo-ano" type="number" placeholder="Ano">
+    <button id="botao-alterar">Salvar alteração</button>
+    <p id="mensagem-alterar"></p>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+/* Import da fonte com fallback caso o Google Fonts falhe */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+/* =========================================
+   VARIÁVEIS E FALLBACKS (CORES E MEDIDAS)
+   ========================================= */
+:root {
+  /* Fallback em HEX (para navegadores antigos) */
+  --bg-color: #f9f9fa;
+  --bg-card: #ffffff;
+  --text-main: #1a1a1a;
+  --text-muted: #555555;
+  --primary: #0055ff;
+  --primary-hover: #0044cc;
+  --danger: #ff3333;
+  --border-color: #e0e0e0;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  /* Sintaxe moderna OKLCH (se o navegador suportar, ele sobrescreve o HEX acima) */
+  @supports (color: oklch(0 0 0)) {
+    --bg-color: oklch(98% 0.01 240);
+    --bg-card: oklch(100% 0 0);
+    --text-main: oklch(20% 0.02 240);
+    --text-muted: oklch(45% 0.02 240);
+    --primary: oklch(55% 0.22 255);
+    --primary-hover: oklch(45% 0.22 255);
+    --danger: oklch(60% 0.2 25);
+    --border-color: oklch(90% 0.01 240);
+    --shadow: 0 4px 12px oklch(0% 0 0 / 0.08);
+  }
+
+  /* Tipografia fluída usando clamp(min, ideal, max) */
+  --font-base: clamp(14px, 1.5vw, 18px);
+  --font-title: clamp(20px, 2.5vw, 28px);
+  --spacing: clamp(8px, 1.5vw, 16px);
+  --radius: 8px;
+}
+
+/* =========================================
+   RESET E ESTILOS GERAIS
+   ========================================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-size: var(--font-base);
+  line-height: 1.5;
+  gap: 15px;
+  padding: var(--spacing);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-items: safe center; /* safe center impede que o conteúdo suma em telas muito pequenas */
+  min-height: 100dvh;
+}
+
+/* Efeito de Container Query */
+main {
+  width: 100%;
+  max-width: 900px;
+  container-type: inline-size;
+  container-name: app-container;
+}
+
+/* Esconde a barra de rolagem mas mantém o scroll (apenas WebKit) */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+html {
+  scrollbar-width: none; /* Firefox */
+}
+
+/* =========================================
+   TIPOGRAFIA E BLOCOS
+   ========================================= */
+h1, h2 {
+  font-size: var(--font-title);
+  color: var(--text-main);
+  margin-bottom: var(--spacing);
+  font-weight: 600;
+}
+
+h2 {
+  font-size: clamp(14px, 2vw, 20px);
+  margin-top: calc(var(--spacing) * 2);
+}
+
+p {
+  margin-bottom: var(--spacing);
+}
+
+ul {
+  list-style: none;
+  background: var(--bg-card);
+  padding: var(--spacing);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  margin-bottom: var(--spacing);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+li {
+  padding: calc(var(--spacing) / 2) 0;
+  border-bottom: 1px solid var(--border-color);
+}
+li:last-child {
+  border-bottom: none;
+}
+
+/* =========================================
+   FORMULÁRIOS E INPUTS
+   ========================================= */
+input {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: inherit;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  background: var(--bg-card);
+  color: var(--text-main);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  max-width: 250px;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px oklch(55% 0.22 255 / 0.2);
+}
+
+/* =========================================
+   BOTÕES
+   ========================================= */
+button {
+  padding: 10px 16px;
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+button:hover {
+  background-color: var(--primary-hover);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* =========================================
+   FEEDBACK VISUAL COM :has() E :focus-within
+   ========================================= */
+
+/* Se o parágrafo estiver vazio, ele se esconde (usando :empty) */
+p:empty {
+  display: none;
+}
+
+/* Destaca o container do input vermelho se o input estiver inválido (simulação) */
+input:invalid {
+  border-color: var(--danger);
+}
+
+/* Estilo da mensagem de erro (parágrafo que não está vazio) */
+p:not(:empty) {
+  padding: 10px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  background-color: var(--bg-card);
+  border-left: 4px solid var(--primary);
+  margin-top: calc(var(--spacing) / 2);
+}
+
+/* Se o parágrafo tiver a palavra "Excluído", fica vermelho */
+p:has(+ :not(:empty)) {
+  color: var(--text-muted);
+}
+
+/* =========================================
+   CONTAINER QUERIES (CQI)
+   ========================================= */
+
+/* Quando o container da página ficar maior que 600px, os inputs crescem e ficam lado a lado */
+@container app-container (min-width: 600px) {
+  form, .grupo-campos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  input {
+    width: auto;
+    flex: 1 1 200px;
+    margin-bottom: 0;
+  }
+  
+  /* Ajusta o tamanho baseado no cqi (Container Query Inline-size) */
+  h1 {
+    font-size: clamp(24px, 4cqi, 36px);
+  }
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Biblioteca</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <h1>Biblioteca</h1>
+
+        <h2> Livros ({{livros.length}})</h2>
+        <ul>
+            <li> v-for="livro in livros">
+                <button @click="editar(livro)">&#9998;</button>
+                <button @click="excluirLivro(livro)">&#10005;</button>
+                {{ livro.id }} - {{ livro.titulo }} ({{ livro.ano}})
+            </li>
+        </ul>
+
+        <h2>Buscar pelo código</h2>
+        <input v-model="codigo" type="number">
+        <button @click="buscarLivro">Buscar</button>
+        <p> {{ resultado }} </p>
+        <h2 v-if="editando">Alterar Livro {{editando}}</h2>
+        <h2 v-else>Cadastrar livro</h2>
+        <input v-model="titulo" placeholder="Titulo">
+        <input v-model="autor" placeholder="Autor">
+        <input v-model="ano" type="number" placeholder="Ano">
+        <button @click= "buscarLivro">Buscar</button>
+        <button v-if="editando" @click="alterarLivro">Salvar alteração</button>
+        <button v-if="editando" @click="cancelar">Cancelar</button>
+        <button v-else @click="cadastrarLivro">Cadastrar</button>
+        <p>{{mensagem }}</p>
+
+
+    </div>
+    <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.js"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>
