@@ -1,0 +1,220 @@
+/* =========================================
+   CONFIGURAÇÕES MODERNAS (O toque do Léo)
+   ========================================= */
+:root {
+  /* 1. Fallback HEX (O "arame" seguro) */
+  --cor-primaria: #1a5fb4;
+  --cor-primaria-hover: #144b8f;
+  --cor-texto: #222222;
+  --cor-erro: #a5281a;
+  --cor-sucesso: #1c6b34;
+  --borda: #dddddd;
+  
+  /* 2. Modernidade OKLCH (O "parafuso de avião") */
+  @supports (color: oklch(0 0 0)) {
+    --cor-primaria: oklch(52% 0.18 255);
+    --cor-primaria-hover: oklch(45% 0.18 255);
+    --cor-texto: oklch(25% 0.01 240);
+    --cor-erro: oklch(50% 0.18 25);
+    --cor-sucesso: oklch(50% 0.15 150);
+    --borda: oklch(88% 0.01 240);
+  }
+}
+
+/* Container Query para a página toda */
+body {
+  /* Fallback */
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  margin: 32px auto;
+  padding: 0 16px;
+  
+  /* Moderno */
+  font-family: 'Inter', system-ui, Arial, sans-serif;
+  font-size: 1rem;
+  margin: 2em auto;
+  padding: 0 1em;
+  color: var(--cor-texto);
+  max-width: 40em;
+  container-type: inline-size;
+  -webkit-tap-highlight-color: transparent;
+  accent-color: var(--cor-primaria);
+}
+
+/* Fallback de fonte + Clamp moderno */
+h1 {
+  color: var(--cor-primaria);
+  font-size: 24px; /* Fallback */
+  font-size: clamp(1.5rem, 5cqi, 2.2rem); /* Moderno */
+}
+
+/* =========================================
+   LISTA
+   ========================================= */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  padding: 6px 0; /* Fallback */
+  padding: 0.4em 0;
+  border-bottom: 1px solid var(--borda);
+  display: flex;
+  align-items: center; /* Fallback */
+  align-items: safe center; /* Moderno: impede que suma em telas pequenas */
+  
+  gap: 8px; /* Fallback */
+  gap: 0.5em;
+}
+
+li button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 18px; /* Fallback */
+  font-size: 1.1em;
+  margin-right: 0.3em;
+  transition: color 0.2s ease;
+}
+
+/* O :focus-visible é bom pra acessibilidade. O :has mostra que o li sabe quando o botão tá em hover */
+li button:hover,
+li:has(button:hover) {
+  color: var(--cor-primaria);
+}
+
+li button:focus-visible {
+  outline: 2px solid var(--cor-primaria);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* =========================================
+   FORMULÁRIO
+   ========================================= */
+input {
+  display: block;
+  width: 100%;
+  padding: 8px; /* Fallback */
+  padding: 0.5em;
+  margin-bottom: 8px;
+  margin-bottom: 0.5em;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-family: inherit;
+  
+  /* Toques modernos: */
+  field-sizing: content; /* O input cresce junto com o texto digitado */
+  transition: border-color 0.3s;
+}
+
+input:focus-within {
+  border-color: var(--cor-primaria);
+  outline: none;
+  /* Fallback de sombra caso o navegador não entenda oklch */
+  box-shadow: 0 0 0 3px rgba(26, 95, 180, 0.2); 
+  box-shadow: 0 0 0 3px oklch(52% 0.18 255 / 0.2); /* Sombra colorida */
+}
+
+/* Botões do Formulário */
+button.principal {
+  background: var(--cor-primaria);
+  color: white;
+  border: none;
+  padding: 8px 19px; /* Fallback */
+  padding: 0.5em 1.2em;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.1s, filter 0.2s;
+}
+
+button.principal:hover {
+  filter: brightness(1.1);
+}
+
+button.principal:active {
+  transform: scale(0.95);
+}
+
+button.secundario {
+  background: none;
+  color: var(--cor-primaria);
+  border: 1px solid var(--cor-primaria);
+  padding: 8px 19px; /* Fallback */
+  padding: 0.5em 1.2em;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* =========================================
+   O GRUPO DE BUSCA E O BOTÃO GRADIENTE (O que faltava!)
+   ========================================= */
+.grupo-busca {
+  display: flex;
+  gap: 8px; /* Fallback */
+  gap: 0.5em;
+  margin-bottom: 16px;
+  margin-bottom: 1em;
+}
+
+.grupo-busca input {
+  margin-bottom: 0;
+}
+
+.btn-buscar {
+  /* Fallback: cor sólida primeiro */
+  background-color: var(--cor-primaria); 
+  /* Moderno: gradiente */
+  background: linear-gradient(135deg, var(--cor-primaria) 0%, #4a90e2 100%);
+  color: white;
+  border: none;
+  padding: 0 24px; /* Fallback */
+  padding: 0 1.5em;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  /* Fallback de sombra */
+  box-shadow: 0 4px 10px rgba(26, 95, 180, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+}
+
+.btn-buscar:hover {
+  transform: translateY(-2px); /* O translate que você pediu */
+  box-shadow: 0 6px 15px rgba(26, 95, 180, 0.4);
+}
+
+.btn-buscar:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 5px rgba(26, 95, 180, 0.3);
+}
+
+/* =========================================
+   MENSAGEM E ERRO
+   ========================================= */
+.mensagem {
+  color: var(--cor-sucesso);
+  background: rgba(28, 107, 52, 0.1); /* Fallback */
+  background: oklch(50% 0.15 150 / 0.1);
+  border-left: 4px solid var(--cor-sucesso);
+  padding: 12px; /* Fallback */
+  padding: 0.8em;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-top: 16px;
+  margin-top: 1em;
+  display: none;
+}
+
+.mensagem:not(:empty) {
+  display: block;
+}
+
+.mensagem.erro {
+  color: var(--cor-erro);
+  background: rgba(165, 40, 26, 0.1); /* Fallback */
+  background: oklch(50% 0.18 25 / 0.1);
+  border-left-color: var(--cor-erro);
+}

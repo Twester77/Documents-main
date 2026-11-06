@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
     <title>Biblioteca</title>
 </head>
 
@@ -13,30 +15,39 @@
 
         <h2> Livros ({{livros.length}})</h2>
         <ul>
-            <li> v-for="livro in livros">
-                <button @click="editar(livro)">&#9998;</button>
-                <button @click="excluirLivro(livro)">&#10005;</button>
+            <li v-for="livro in livros" :key="livro.id">
+                <!-- Adicionei a classe "btn-acao" e o title para acessibilidade -->
+                <button class="btn-acao" title="Editar este livro" @click="editar(livro)">&#9998;</button>
+                <button class="btn-acao" title="Excluir este livro" @click="excluirLivro(livro)">&#10005;</button>
                 {{ livro.id }} - {{ livro.titulo }} ({{ livro.ano}})
             </li>
         </ul>
 
         <h2>Buscar pelo código</h2>
-        <input v-model="codigo" type="number">
-        <button @click="buscarLivro">Buscar</button>
+        <!-- A div grupo-busca alinha o botão ao lado do input -->
+        <div class="grupo-busca">
+            <input v-model="codigo" type="number">
+            <!-- Adicionando a classe btn-buscar para pegar o gradiente -->
+            <button class="btn-buscar" @click="buscarLivro">Buscar</button>
+        </div>
         <p> {{ resultado }} </p>
+        
         <h2 v-if="editando">Alterar Livro {{editando}}</h2>
         <h2 v-else>Cadastrar livro</h2>
+        
         <input v-model="titulo" placeholder="Titulo">
         <input v-model="autor" placeholder="Autor">
         <input v-model="ano" type="number" placeholder="Ano">
-        <button @click= "buscarLivro">Buscar</button>
-        <button v-if="editando" @click="alterarLivro">Salvar alteração</button>
-        <button v-if="editando" @click="cancelar">Cancelar</button>
-        <button v-else @click="cadastrarLivro">Cadastrar</button>
-        <p>{{mensagem }}</p>
 
+        <!-- Botões do formulário com as classes "principal" e "secundario" -->
+        <button v-if="editando" class="principal" @click="alterarLivro">Salvar alteração</button>
+        <button v-if="editando" class="secundario" @click="cancelar">Cancelar</button>
+        <button v-else class="principal" @click="cadastrarLivro">Cadastrar</button>
+        
+        <p class="mensagem" :class="{ erro: erro }">{{ mensagem }}</p>
 
     </div>
+    
     <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.js"></script>
     <script src="app.js"></script>
 

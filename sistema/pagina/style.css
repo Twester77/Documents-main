@@ -33,7 +33,7 @@
   --font-base: clamp(14px, 1.5vw, 18px);
   --font-title: clamp(20px, 2.5vw, 28px);
   --spacing: clamp(8px, 1.5vw, 16px);
-  --radius: 8px;
+  --radius: clamp(8px, 1.5vw, 12px);
 }
 
 /* =========================================
@@ -43,25 +43,31 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  font-size: var(--font-base);
+  font-family: 'Inter', BlinkMacSystem, system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color, #f9f9fa);
+  color: var(--text-main, #1a1a1a);
+  font-size: var(--font-base, 16px);
   line-height: 1.5;
   gap: 15px;
-  padding: var(--spacing);
+  padding: 10px;
+  padding: var(--spacing, 16px);
   display: flex;
   flex-direction: column;
   align-items: center;
   align-items: safe center; /* safe center impede que o conteúdo suma em telas muito pequenas */
-  min-height: 100dvh;
+  min-height: 100vh;
+  height: 100dvh;
+  margin: 20px auto;
+  max-width: 900px;
 }
 
 /* Efeito de Container Query */
 main {
+  flex: 1 0 auto;
   width: 100%;
   max-width: 900px;
   container-type: inline-size;
@@ -75,21 +81,24 @@ main {
 }
 html {
   scrollbar-width: none; /* Firefox */
+  scroll-behavior: smooth;
 }
 
 /* =========================================
    TIPOGRAFIA E BLOCOS
    ========================================= */
 h1, h2 {
-  font-size: var(--font-title);
-  color: var(--text-main);
-  margin-bottom: var(--spacing);
+  font-size: var(--font-title, 24px);
+  color: var(--text-main, #1a1a1a);
+  margin-bottom: var(--spacing, 16px);
   font-weight: 600;
 }
 
 h2 {
+  font-size: 14px;
   font-size: clamp(14px, 2vw, 20px);
-  margin-top: calc(var(--spacing) * 2);
+  margin-top: 15px;
+  margin-top: calc(var(--spacing, 16px) * 2);
 }
 
 p {
@@ -98,19 +107,26 @@ p {
 
 ul {
   list-style: none;
-  background: var(--bg-card);
-  padding: var(--spacing);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border-color);
-  margin-bottom: var(--spacing);
-  max-height: 300px;
+  min-height: 100px;
+  width:100%;
+  max-width: 600px;
+  scroll-snap-type: y mandatory;
+  scroll-padding: var(--spacing, 16px);
+  background: var(--bg-card, #ffffff);
+  padding: var(--spacing, 16px);
+  border-radius: var(--radius, 8px);
+  box-shadow: var(--shadow, 0 4px 12px rgba(0, 0, 0, 0.05));
+  border: 1px solid var(--border-color, #e0e0e0);
+  margin-bottom: var(--spacing, 16px);
+  max-height: 800px;
   overflow-y: auto;
 }
 
 li {
-  padding: calc(var(--spacing) / 2) 0;
-  border-bottom: 1px solid var(--border-color);
+  padding: 10px 0;
+  padding: calc(var(--spacing, 16px) / 2) 0;
+  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--border-color, #e0e0e0);
 }
 li:last-child {
   border-bottom: none;
@@ -121,22 +137,26 @@ li:last-child {
    ========================================= */
 input {
   padding: 10px;
+  border: 1px solid #e0e0e0;
   border: 1px solid var(--border-color);
+  border-radius: 10px;
   border-radius: var(--radius);
   font-family: inherit;
   font-size: inherit;
   margin-right: 8px;
   margin-bottom: 8px;
-  background: var(--bg-card);
-  color: var(--text-main);
+  background: #ffffff;
+  background: var(--bg-card, #ffffff);
+  color: #1a1a1a;
+  color: var(--text-main, #1a1a1a);
   transition: border-color 0.2s, box-shadow 0.2s;
   width: 100%;
-  max-width: 250px;
+  max-width: 600px;
 }
 
 input:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--primary, #0055ff);
   box-shadow: 0 0 0 3px oklch(55% 0.22 255 / 0.2);
 }
 
@@ -145,10 +165,11 @@ input:focus {
    ========================================= */
 button {
   padding: 10px 16px;
-  background-color: var(--primary);
+  background-color: var(--primary, #0055ff);
   color: #ffffff;
   border: none;
-  border-radius: var(--radius);
+  border-radius: 8px;
+  border-radius: var(--radius, 8px);
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
@@ -157,7 +178,8 @@ button {
 }
 
 button:hover {
-  background-color: var(--primary-hover);
+  background-color: #0047d9;
+  background-color: var(--primary-hover, #0047d9);
 }
 
 button:active {
@@ -175,22 +197,22 @@ p:empty {
 
 /* Destaca o container do input vermelho se o input estiver inválido (simulação) */
 input:invalid {
-  border-color: var(--danger);
+  border-color: var(--danger, #ff4757);
 }
 
 /* Estilo da mensagem de erro (parágrafo que não está vazio) */
 p:not(:empty) {
   padding: 10px;
-  border-radius: var(--radius);
+  border-radius: var(--radius, 8px);
   font-weight: 600;
-  background-color: var(--bg-card);
-  border-left: 4px solid var(--primary);
-  margin-top: calc(var(--spacing) / 2);
+  background-color: var(--bg-card, #ffffff);
+  border-left: 4px solid var(--primary, #0055ff);
+  margin-top: calc(var(--spacing, 16px) / 2);
 }
 
 /* Se o parágrafo tiver a palavra "Excluído", fica vermelho */
 p:has(+ :not(:empty)) {
-  color: var(--text-muted);
+  color: var(--text-muted, #6c757d);
 }
 
 /* =========================================
@@ -214,6 +236,7 @@ p:has(+ :not(:empty)) {
   
   /* Ajusta o tamanho baseado no cqi (Container Query Inline-size) */
   h1 {
+    font-size: 24px;
     font-size: clamp(24px, 4cqi, 36px);
   }
 }
