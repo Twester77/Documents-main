@@ -30,7 +30,7 @@ class RepositorioLivro:
     
     def buscar_por_titulo(self, trecho):
         self.cursor.execute(
-            "SELECT  id, titulo, autor, ano FROM livro WHERE titulo LIKE ?"
+            "SELECT  id, titulo, autor, ano FROM livro WHERE titulo LIKE ?",
             ("%" + trecho + "%",)
         )
         
