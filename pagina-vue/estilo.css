@@ -1,6 +1,14 @@
 /* =========================================
    CONFIGURAÇÕES MODERNAS (O toque do Léo)
    ========================================= */
+
+   * {
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+   } 
+
 :root {
   /* 1. Fallback HEX (O "arame" seguro) */
   --cor-primaria: #1a5fb4;
@@ -27,8 +35,9 @@ body {
   font-family: Arial, sans-serif;
   font-size: 16px;
   margin: 32px auto;
-  padding: 0 16px;
-  
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
   /* Moderno */
   font-family: 'Inter', system-ui, Arial, sans-serif;
   font-size: 1rem;
@@ -37,8 +46,15 @@ body {
   color: var(--cor-texto);
   max-width: 40em;
   container-type: inline-size;
-  -webkit-tap-highlight-color: transparent;
   accent-color: var(--cor-primaria);
+}
+
+div#app { 
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
 }
 
 /* Fallback de fonte + Clamp moderno */
@@ -122,6 +138,7 @@ button.principal {
   background: var(--cor-primaria);
   color: white;
   border: none;
+  min-height: 42px;
   padding: 8px 19px; /* Fallback */
   padding: 0.5em 1.2em;
   border-radius: 4px;

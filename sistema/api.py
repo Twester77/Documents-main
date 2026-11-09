@@ -1,18 +1,12 @@
 import uvicorn
 from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from dominio.livro import Livro
 from dados.repositorio_livro import RepositorioLivro
 
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 def para_dict(livro):
     return {
@@ -47,6 +41,14 @@ def buscar_livro(codigo: int):
     if livro is None:
         raise HTTPException(status_code=404, detail="Livro não encontrado")
     return para_dict(livro)
+
+@app.get("/busca")
+def buscar_por_titulo(titulo, str):
+    repositorio = RepositorioLivro()
+    livros = repositorio.buscar_por_titulo(titulo)
+    repositorio.fechar()
+    return [para_dict(livro) for livro in livros]
+    
 
 @app.post("/livros", status_code=201)
 def cadastrar_livro(corpo: dict):
@@ -83,6 +85,8 @@ def excluir_livro(codigo: int):
     repositorio.excluir(codigo)
     repositorio.fechar()
 
+app.mount("/tela", StaticFiles(directory="pagina-vue", html=True), name ="tela")
 
 if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0")
     uvicorn.run(app)

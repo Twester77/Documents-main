@@ -27,6 +27,14 @@ class RepositorioLivro:
         if linha is None:
             return None
         return self._para_objeto(linha)
+    
+    def buscar_por_titulo(self, trecho):
+        self.cursor.execute(
+            "SELECT  id, titulo, autor, ano FROM livro WHERE titulo LIKE ?"
+            ("%" + trecho + "%",)
+        )
+        
+        return [self._para_objeto(linha) for linha in self.cursor.fetchall()]
 
     def salvar(self, livro):
         self.cursor.execute(
